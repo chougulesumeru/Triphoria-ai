@@ -1,0 +1,18 @@
+# local database
+# configure docker compose file
+services:
+  db:
+    image: postgres:16
+    container_name: hotel_db
+    environment:
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppassword
+      POSTGRES_DB: hotel_app
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./db/migrations:/docker-entrypoint-initdb.d
+
+volumes:
+  db_data:
