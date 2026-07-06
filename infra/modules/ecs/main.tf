@@ -38,14 +38,14 @@ resource "aws_ecs_cluster" "ecs_main" {
 }
 
 
-resource "aws_ecs_task_defination" "ecs_main" {
+resource "aws_ecs_task_definition" "ecs_main" {
   family                   = "${var.env_name}-task"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   cpu                      = var.cpu
   memory                   = var.memory
 
-  containers_definations = jsonencode([{
+  container_definitions = jsonencode([{
     name         = "${var.env_name}-app"
     image        = var.container_image
     portMappings = [{ containerPort = var.container_port }]
@@ -61,7 +61,7 @@ resource "aws_ecs_task_defination" "ecs_main" {
 resource "aws_ecs_service" "ecs_main" {
   name            = "${var.env_name}-service"
   cluster         = aws_ecs_cluster.ecs_main.id
-  task_definition = aws_ecs_task_defination.ecs_main.arn
+  task_definition = aws_ecs_task_definition.ecs_main.arn
   desired_count   = var.desired_count
   launch_type     = "FARGATE"
 
