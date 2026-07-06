@@ -2,7 +2,7 @@
 terraform {
   backend "s3" {
     bucket = "terra-state-dev"
-    key    = "dev/terraform.tfstate"
+    key    = "prod/terraform.tfstate"
     region = "us-east-2"
   }
 }
@@ -91,7 +91,7 @@ module "ecs" {
   container_image    = "nginx:latest"
   cpu                = "256"
   memory             = "512"
-  desired_count      = 1
+  desired_count      = 2
   vpc_id             = module.network.vpc_id
   public_subnet_ids  = module.network.public_subnet_ids
   private_subnet_ids = module.network.private_subnet_ids
